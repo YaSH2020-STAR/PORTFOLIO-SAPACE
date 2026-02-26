@@ -1,0 +1,27 @@
+# PROTO — Cross-Species Acoustic Proto-Language Discovery
+# Python 3.8+
+
+# Audio
+numpy>=1.21,<2
+scipy>=1.7
+soundfile>=0.12
+librosa>=0.10
+resampy>=0.4
+
+# ML / SSL
+torch>=1.12
+torchaudio>=0.12
+
+# Evaluation & viz
+scikit-learn>=1.0
+pandas>=1.3
+umap-learn>=0.5
+matplotlib>=3.5
+seaborn>=0.12
+
+# Config & CLI
+pyyaml>=6.0
+tqdm>=4.62
+
+# Optional: data download
+requests>=2.28

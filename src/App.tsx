@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import PortfolioNav from './components/portfolio/PortfolioNav';
 import PortfolioFooter from './components/portfolio/PortfolioFooter';
+import FloatingStars from './components/portfolio/FloatingStars';
 import PortfolioScrollPage from './pages/portfolio/PortfolioScrollPage';
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
@@ -15,6 +16,7 @@ import CommunityPage from './pages/CommunityPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import FAQPage from './pages/FAQPage';
+import DsyncLandingPage from './pages/DsyncLandingPage';
 
 // Scroll to top component
 const ScrollToTop = () => {
@@ -42,16 +44,22 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isDsync = location.pathname === '/dsync';
+
+  if (isDsync) {
+    return <DsyncLandingPage />;
+  }
+
   return (
-    <Router>
-      <AuthProvider>
-        <ScrollToTop />
-        <div className="min-h-screen bg-space">
-          <PortfolioNav />
-          <Routes>
-            <Route path="/" element={<PortfolioScrollPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
+    <div className="min-h-screen bg-space relative">
+      <FloatingStars />
+      <div className="relative z-10">
+        <PortfolioNav />
+        <Routes>
+          <Route path="/" element={<PortfolioScrollPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/welcome" element={<WelcomePage />} />
@@ -70,8 +78,21 @@ function App() {
               }
             />
           </Routes>
-          <PortfolioFooter />
-        </div>
+        <PortfolioFooter />
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/dsync" element={<DsyncLandingPage />} />
+          <Route path="*" element={<AppContent />} />
+        </Routes>
       </AuthProvider>
     </Router>
   );

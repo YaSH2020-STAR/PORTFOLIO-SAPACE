@@ -92,3 +92,67 @@ html {
     @apply py-4 md:py-8;
   }
 }
+
+/* Floating stars animation */
+@keyframes star-twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-star-twinkle {
+  animation: star-twinkle ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+/* ——— Dsync landing: futuristic / animated ——— */
+@keyframes dsync-glow-pulse {
+  0%, 100% { opacity: 0.6; filter: blur(60px); transform: scale(1); }
+  50% { opacity: 1; filter: blur(80px); transform: scale(1.1); }
+}
+@keyframes dsync-grid-flow {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+@keyframes dsync-float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-12px) translateX(4px); }
+  66% { transform: translateY(-6px) translateX(-4px); }
+}
+@keyframes dsync-scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes dsync-text-glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(249,115,22,0.5), 0 0 40px rgba(249,115,22,0.3); }
+  50% { text-shadow: 0 0 30px rgba(249,115,22,0.8), 0 0 60px rgba(249,115,22,0.4); }
+}
+@keyframes dsync-reveal {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.dsync-bg {
+  background: #050508;
+  background-image:
+    linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: dsync-grid-flow 20s linear infinite;
+}
+.dsync-orb {
+  animation: dsync-glow-pulse 4s ease-in-out infinite;
+}
+.dsync-float {
+  animation: dsync-float 8s ease-in-out infinite;
+}
+.dsync-title-glow {
+  animation: dsync-text-glow 3s ease-in-out infinite;
+}
+.dsync-reveal {
+  animation: dsync-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}

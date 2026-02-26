@@ -18,6 +18,8 @@ export default {
         'silver-light': '#e0e0e8',
         'glow-blue': '#4a6cf7',
         'glow-violet': '#8b5cf6',
+        'dsync-orange': '#F97316',
+        'dsync-teal': '#14B8A6',
       },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],

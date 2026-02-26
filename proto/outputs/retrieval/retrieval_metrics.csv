@@ -1,0 +1,4 @@
+metric,value
+mean_cosine_nearest,0.77074844
+mean_cosine_random,0.46664673
+difference,0.3041017

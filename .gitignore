@@ -30,3 +30,8 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Python virtual environments (never commit)
+venv/
+**/venv/
+proto/venv/
