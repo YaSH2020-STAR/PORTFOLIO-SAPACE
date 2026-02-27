@@ -16,7 +16,6 @@ import CommunityPage from './pages/CommunityPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import FAQPage from './pages/FAQPage';
-import DsyncLandingPage from './pages/DsyncLandingPage';
 
 // Scroll to top component
 const ScrollToTop = () => {
@@ -44,55 +43,39 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
-function AppContent() {
-  const location = useLocation();
-  const isDsync = location.pathname === '/dsync';
-
-  if (isDsync) {
-    return <DsyncLandingPage />;
-  }
-
-  return (
-    <div className="min-h-screen bg-space relative">
-      <FloatingStars />
-      <div className="relative z-10">
-        <PortfolioNav />
-        <Routes>
-          <Route path="/" element={<PortfolioScrollPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/welcome" element={<WelcomePage />} />
-            <Route path="/features" element={<FeaturesPage />} />
-            <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/community" element={<CommunityPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        <PortfolioFooter />
-      </div>
-    </div>
-  );
-}
-
 function App() {
   return (
     <Router>
       <AuthProvider>
         <ScrollToTop />
-        <Routes>
-          <Route path="/dsync" element={<DsyncLandingPage />} />
-          <Route path="*" element={<AppContent />} />
-        </Routes>
+        <div className="min-h-screen bg-space relative">
+          <FloatingStars />
+          <div className="relative z-10">
+            <PortfolioNav />
+            <Routes>
+              <Route path="/" element={<PortfolioScrollPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/welcome" element={<WelcomePage />} />
+              <Route path="/features" element={<FeaturesPage />} />
+              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/community" element={<CommunityPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <DashboardPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+            <PortfolioFooter />
+          </div>
+        </div>
       </AuthProvider>
     </Router>
   );
