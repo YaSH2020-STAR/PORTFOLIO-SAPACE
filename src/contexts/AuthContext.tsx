@@ -26,11 +26,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
     // Wait for Firebase Auth to initialize
     const unsubscribe = AuthService.onAuthStateChanged(async (currentUser) => {
-      // Ensure auth is ready before proceeding
-      await auth.authStateReady();
-      
+      try {
+        await auth.authStateReady();
+      } catch {
+        setLoading(false);
+        return;
+      }
       setUser(currentUser);
       if (currentUser) {
         try {

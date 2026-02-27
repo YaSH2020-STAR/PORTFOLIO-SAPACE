@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics, isSupported } from 'firebase/analytics';
@@ -13,32 +13,33 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase only if not already initialized
-let app;
-try {
-  app = initializeApp(firebaseConfig);
-} catch (error) {
-  // If already initialized, use the existing app
-  const existingApps = getApps();
-  app = existingApps[0];
+const hasValidConfig = firebaseConfig.apiKey && firebaseConfig.projectId;
+
+let app: FirebaseApp | null = null;
+let db: ReturnType<typeof getFirestore> | null = null;
+let auth: ReturnType<typeof getAuth> | null = null;
+
+if (hasValidConfig) {
+  try {
+    app = getApps().length ? getApps()[0] as FirebaseApp : initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+  } catch (error) {
+    console.error('Firebase initialization failed:', error);
+  }
 }
 
-// Initialize Firestore
-export const db = getFirestore(app);
-
-// Initialize Auth
-export const auth = getAuth(app);
-
 // Initialize Analytics only in production and when supported
-let analytics = null;
-if (import.meta.env.PROD) {
+let analytics: ReturnType<typeof getAnalytics> | null = null;
+if (app && import.meta.env.PROD) {
   isSupported().then(supported => {
-    if (supported) {
+    if (supported && app) {
       analytics = getAnalytics(app);
     }
-  }).catch(error => {
-    console.warn('Firebase Analytics initialization failed:', error);
+  }).catch(err => {
+    console.warn('Firebase Analytics initialization failed:', err);
   });
 }
 
 export { analytics };
+export { db, auth };
