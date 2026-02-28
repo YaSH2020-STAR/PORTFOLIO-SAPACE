@@ -14,7 +14,7 @@ export const identity = {
 export const home = {
   headline: 'Building Intelligent Systems That Learn, Adapt, and Scale',
   subheading: 'Applied AI Engineer & Data Science · Robotics graduate student at Arizona State University',
-  intro: 'I design and deploy intelligent systems — from data science and ML pipelines to NLP-powered automation and full-stack applications. My work bridges data, AI research, and real-world impact.',
+  intro: 'I design and deploy intelligent systems: from data science and ML pipelines to NLP-powered automation and full-stack applications. My work bridges data, AI research, and real-world impact.',
   cta: 'Get in touch',
 } as const;
 
@@ -81,8 +81,9 @@ export const projectsCaseStudies: CaseStudy[] = [
 ];
 
 export const productApp = {
-  title: 'DsYnc – Intelligent Data & Workflow Synchronization',
+  title: 'DsYnc: Intelligent Data & Workflow Synchronization',
   tagline: 'Proof that I can ship real products, not just models.',
+  url: 'https://dsyync.netlify.app/',
   points: [
     'Full-stack application with end-to-end ownership',
     'Backend APIs and scalable architecture',
@@ -113,7 +114,17 @@ export const odyssey = {
     'Music is another constant. I gravitate toward R&B — rhythm, emotion, storytelling — often playing during late-night coding sessions or long reflective walks.',
   ],
   closing: 'Odyssey represents movement: between technology and nature, between logic and emotion, between structure and creativity.',
-  galleryPlaceholder: true, // for future image galleries
+  // Alternate: me, scenic, me, scenic, me, scenic, me, scenic
+  images: [
+    '/odyssey/odyssey-5.png',  // me
+    '/odyssey/odyssey-1.png',  // scenic
+    '/odyssey/odyssey-6.png',  // me
+    '/odyssey/odyssey-2.png',  // scenic
+    '/odyssey/odyssey-7.png',  // me
+    '/odyssey/odyssey-3.png',  // scenic
+    '/odyssey/odyssey-8.png',  // me
+    '/odyssey/odyssey-4.png',  // scenic
+  ],
 } as const;
 
 export const contact = {

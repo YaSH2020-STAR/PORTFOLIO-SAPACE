@@ -36,6 +36,80 @@ function Chapter({
   );
 }
 
+/** Dim canyon image behind About section; fades when scrolling away from "Who I am". */
+function AboutBackgroundImage() {
+  const [opacity, setOpacity] = React.useState(0);
+
+  useEffect(() => {
+    const aboutEl = document.getElementById('about');
+    if (!aboutEl) return;
+
+    const updateOpacity = () => {
+      const rect = aboutEl.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const sectionCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionCenter - viewportCenter);
+      const fadeRange = window.innerHeight * 0.6;
+      const visible = Math.max(0, 1 - distance / fadeRange);
+      setOpacity(visible * 0.14);
+    };
+
+    updateOpacity();
+    window.addEventListener('scroll', updateOpacity, { passive: true });
+    return () => window.removeEventListener('scroll', updateOpacity);
+  }, []);
+
+  return (
+    <div
+      className="fixed inset-0 bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-300"
+      style={{
+        backgroundImage: 'url(/hero-bg.png)',
+        opacity,
+        zIndex: 0,
+      }}
+      aria-hidden
+    />
+  );
+}
+
+/** Dim B&W image behind Dsync/Product section; fades when scrolling away. Positioned right. */
+function ProductSectionBackgroundImage() {
+  const [opacity, setOpacity] = React.useState(0);
+
+  useEffect(() => {
+    const el = document.getElementById('product');
+    if (!el) return;
+
+    const updateOpacity = () => {
+      const rect = el.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const sectionCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionCenter - viewportCenter);
+      const fadeRange = window.innerHeight * 0.6;
+      const visible = Math.max(0, 1 - distance / fadeRange);
+      setOpacity(visible * 0.14);
+    };
+
+    updateOpacity();
+    window.addEventListener('scroll', updateOpacity, { passive: true });
+    return () => window.removeEventListener('scroll', updateOpacity);
+  }, []);
+
+  return (
+    <div
+      className="fixed inset-0 bg-cover bg-no-repeat pointer-events-none transition-opacity duration-300"
+      style={{
+        backgroundImage: 'url(/dsync-section-bg.png)',
+        backgroundPosition: 'right center',
+        filter: 'grayscale(100%)',
+        opacity,
+        zIndex: 0,
+      }}
+      aria-hidden
+    />
+  );
+}
+
 const PortfolioScrollPage: React.FC = () => {
   const contactRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +132,7 @@ const PortfolioScrollPage: React.FC = () => {
 
   return (
     <div id="portfolio-scroll-root" className="bg-space">
-      {/* ——— Hero ——— */}
+      {/* Hero */}
       <Chapter id="home" className="starfield pt-16">
         <div className="absolute inset-0 gradient-orb-strong pointer-events-none" aria-hidden />
         <div className="absolute inset-0 bg-gradient-to-b from-space/40 via-transparent to-space pointer-events-none" aria-hidden />
@@ -91,9 +165,11 @@ const PortfolioScrollPage: React.FC = () => {
         </div>
       </Chapter>
 
-      {/* ——— About ——— */}
-      <Chapter id="about" className="py-24 md:py-32">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+      {/* About */}
+      <Chapter id="about" className="py-24 md:py-32 relative">
+        {/* Dim background image: fades when scrolling away from this section */}
+        <AboutBackgroundImage />
+        <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-6">About</p>
             <h2 className="section-title text-white mb-8">Who I am</h2>
@@ -106,7 +182,7 @@ const PortfolioScrollPage: React.FC = () => {
         </div>
       </Chapter>
 
-      {/* ——— Projects ——— */}
+      {/* Projects */}
       <Chapter id="projects" minHeight={false} className="py-24 md:py-32">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
@@ -124,7 +200,7 @@ const PortfolioScrollPage: React.FC = () => {
         </div>
       </Chapter>
 
-      {/* ——— Research ——— */}
+      {/* Research */}
       <Chapter id="research" className="py-24 md:py-32">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
@@ -149,14 +225,32 @@ const PortfolioScrollPage: React.FC = () => {
         </div>
       </Chapter>
 
-      {/* ——— Product ——— */}
-      <Chapter id="product" className="py-24 md:py-32">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+      {/* Product */}
+      <Chapter id="product" className="py-24 md:py-32 relative">
+        <ProductSectionBackgroundImage />
+        <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Product</p>
-            <h2 className="section-title text-white mb-4">DsYnc</h2>
+            <h2 className="section-title text-white mb-4">
+              <a
+                href={productApp.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-neon transition-colors"
+              >
+                DsYnc
+              </a>
+            </h2>
             <p className="text-silver-light font-medium mb-2">{productApp.title}</p>
-            <p className="text-silver italic mb-8">{productApp.tagline}</p>
+            <p className="text-silver italic mb-4">{productApp.tagline}</p>
+            <a
+              href={productApp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-glow-blue hover:text-neon transition-colors text-sm font-medium mb-8"
+            >
+              Visit Dsync website →
+            </a>
           </ScrollReveal>
           <ul className="space-y-4 text-silver">
             {productApp.points.map((point, i) => (
@@ -171,7 +265,7 @@ const PortfolioScrollPage: React.FC = () => {
         </div>
       </Chapter>
 
-      {/* ——— Leadership ——— */}
+      {/* Leadership */}
       <Chapter id="leadership" className="py-24 md:py-32">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
@@ -182,10 +276,10 @@ const PortfolioScrollPage: React.FC = () => {
         </div>
       </Chapter>
 
-      {/* ——— Odyssey ——— */}
+      {/* Odyssey */}
       <Chapter id="odyssey" className="starfield py-24 md:py-32 relative">
         <div className="absolute inset-0 gradient-orb pointer-events-none" aria-hidden />
-        <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-[0.25em] text-silver/50 mb-4">Beyond code</p>
             <h2 className="section-title text-white mb-6">Odyssey</h2>
@@ -200,17 +294,26 @@ const PortfolioScrollPage: React.FC = () => {
           <ScrollReveal delay={160}>
             <p className="text-silver-light font-medium mt-8">{odyssey.closing}</p>
           </ScrollReveal>
-          {odyssey.galleryPlaceholder && (
-            <ScrollReveal delay={200}>
-              <div className="mt-16 py-16 border border-dashed border-gloss-mid/40 rounded-xl text-center text-silver/50 text-sm">
-                Image gallery — to be added
-              </div>
-            </ScrollReveal>
-          )}
+          <ScrollReveal delay={200}>
+            <div className="mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+              {odyssey.images.map((src, i) => (
+                <div
+                  key={src}
+                  className="relative aspect-[3/4] rounded-lg overflow-hidden border border-gloss-mid/50 bg-gloss/30 hover:border-silver/30 transition-colors duration-300"
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    className="w-full h-full object-cover grayscale opacity-90 hover:opacity-100 transition-opacity duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </Chapter>
 
-      {/* ——— Contact ——— */}
+      {/* Contact */}
       <Chapter id="contact" className="py-24 md:py-32" minHeight={true}>
         <div ref={contactRef} className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <ScrollReveal>
