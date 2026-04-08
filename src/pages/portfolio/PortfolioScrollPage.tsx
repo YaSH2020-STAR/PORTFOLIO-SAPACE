@@ -8,7 +8,6 @@ import {
   projectsCaseStudies,
   research,
   productApp,
-  secondaryProductApp,
   leadership,
   odyssey,
   contact,
@@ -260,16 +259,6 @@ const PortfolioScrollPage: React.FC = () => {
               Visit Dsync website →
             </a>
 
-            <h3 className="text-white font-display font-semibold mb-2">{secondaryProductApp.title}</h3>
-            <p className="text-silver italic mb-3">{secondaryProductApp.tagline}</p>
-            <a
-              href={secondaryProductApp.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-glow-blue hover:text-neon transition-colors text-sm font-medium mb-8"
-            >
-              Visit AfterHours website →
-            </a>
           </ScrollReveal>
           <ul className="space-y-4 text-silver">
             {productApp.points.map((point, i) => (

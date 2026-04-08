@@ -78,6 +78,17 @@ export const projectsCaseStudies: CaseStudy[] = [
     tech: ['Full-stack', 'React', 'APIs', 'Matching algorithms'],
     impact: 'Hackathon winner.',
   },
+  {
+    id: 'afterhours',
+    title: 'AfterHours',
+    problem: 'Adults often struggle to build real friendships through one-off social events.',
+    approach:
+      'AfterHours rethinks how people make friends as adults. By replacing one-off events with small, consistent group meetups, it creates a system where relationships can naturally develop over time; no feeds, no performance, just real connection.',
+    tech: ['Product design', 'Community systems', 'Consistency model'],
+    impact: 'Focused on long-term connection through repeated, low-pressure interactions.',
+    link: 'https://afterrhours.netlify.app/',
+    linkLabel: 'Visit AfterHours',
+  },
 ];
 
 export const productApp = {
@@ -91,11 +102,6 @@ export const productApp = {
   ],
 } as const;
 
-export const secondaryProductApp = {
-  title: 'AfterHours',
-  tagline: 'Real friends after work through small weekly hangouts.',
-  url: 'https://afterrhours.netlify.app/',
-} as const;
 
 export const research = {
   interests: [
