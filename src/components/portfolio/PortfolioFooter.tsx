@@ -4,7 +4,7 @@ import { identity } from '../../data/portfolioData';
 
 const PortfolioFooter: React.FC = () => {
   return (
-    <footer className="border-t border-gloss-mid/50 bg-space-lighter/80">
+    <footer className="border-t border-gloss-mid/50 bg-space-lighter/80 font-typewriter">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-silver">
           <span>

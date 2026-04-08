@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { Mail, Linkedin, Github, ChevronDown, FileDown } from 'lucide-react';
 import { ScrollReveal } from '../../components/portfolio/ScrollReveal';
 import { PointerSpotlightLayer } from '../../components/portfolio/PointerSpotlightLayer';
+import { TypewriterEffect } from '../../components/portfolio/TypewriterEffect';
 import {
   home,
   about,
@@ -170,7 +171,7 @@ const PortfolioScrollPage: React.FC = () => {
   };
 
   return (
-    <div id="portfolio-scroll-root" className="relative min-h-screen bg-space">
+    <div id="portfolio-scroll-root" className="relative min-h-screen bg-space font-typewriter">
       {/* Layer stack: base → star pattern → pointer spotlight (was hidden when spotlight lived under App z-10) → content */}
       <div className="absolute inset-0 starfield pointer-events-none z-0" aria-hidden />
       <PointerSpotlightLayer />
@@ -182,19 +183,36 @@ const PortfolioScrollPage: React.FC = () => {
         <div className="relative z-10 px-4 sm:px-6 max-w-4xl mx-auto text-center">
           <div className="pointer-parallax-hero">
             <ScrollReveal>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-tight mb-6">
-                {home.headline}
-              </h1>
+              <TypewriterEffect
+                as="h1"
+                text={home.headline}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-tight mb-6 flex flex-wrap items-baseline justify-center gap-x-1 text-balance"
+                innerClassName="inline-flex flex-wrap justify-center gap-x-1 gap-y-1 items-baseline"
+                wordDelay={0.07}
+                startDelayMs={120}
+                showCursor
+              />
             </ScrollReveal>
             <ScrollReveal delay={80}>
-              <p className="text-lg md:text-xl text-silver max-w-2xl mx-auto mb-8">
-                {home.subheading}
-              </p>
+              <TypewriterEffect
+                as="p"
+                text={home.subheading}
+                className="text-lg md:text-xl text-silver max-w-2xl mx-auto mb-8 flex flex-wrap items-baseline justify-center gap-x-1"
+                innerClassName="inline-flex flex-wrap justify-center gap-x-1 gap-y-1 items-baseline"
+                wordDelay={0.05}
+                startDelayMs={280}
+              />
             </ScrollReveal>
             <ScrollReveal delay={160}>
-              <p className="text-silver/90 text-base md:text-lg max-w-xl mx-auto mb-12">
-                {home.intro}
-              </p>
+              <TypewriterEffect
+                as="p"
+                text={home.intro}
+                className="text-silver/90 text-base md:text-lg max-w-xl mx-auto mb-12 flex flex-wrap items-baseline justify-center gap-x-1"
+                innerClassName="inline-flex flex-wrap justify-center gap-x-1 gap-y-1 items-baseline"
+                wordDelay={0.035}
+                startDelayMs={400}
+                showCursor
+              />
             </ScrollReveal>
             <ScrollReveal delay={240}>
               <button
@@ -216,12 +234,30 @@ const PortfolioScrollPage: React.FC = () => {
         <AboutBackgroundImage />
         <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-6">About</p>
-            <h2 className="section-title text-white mb-8">Who I am</h2>
+            <TypewriterEffect
+              as="p"
+              text="About"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-6 font-typewriter"
+              wordDelay={0.14}
+              startDelayMs={80}
+            />
+            <TypewriterEffect
+              as="h2"
+              text="Who I am"
+              className="section-title text-white mb-8 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.12}
+              startDelayMs={200}
+            />
           </ScrollReveal>
           {about.paragraphs.map((p, i) => (
             <ScrollReveal key={i} delay={i * 60}>
-              <p className="text-silver leading-relaxed mb-6">{p}</p>
+              <TypewriterEffect
+                as="p"
+                text={p}
+                className="text-silver leading-relaxed mb-6 flex flex-wrap items-baseline gap-x-1"
+                wordDelay={0.028}
+                startDelayMs={120 + i * 80}
+              />
             </ScrollReveal>
           ))}
         </div>
@@ -231,9 +267,26 @@ const PortfolioScrollPage: React.FC = () => {
       <Chapter id="projects" minHeight={false} className="py-24 md:py-32">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Work</p>
-            <h2 className="section-title text-white mb-4">Projects</h2>
-            <p className="text-silver mb-14 max-w-xl">Selected case studies: problem, approach, tech, impact.</p>
+            <TypewriterEffect
+              as="p"
+              text="Work"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4 font-typewriter"
+              wordDelay={0.14}
+            />
+            <TypewriterEffect
+              as="h2"
+              text="Projects"
+              className="section-title text-white mb-4 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.14}
+              startDelayMs={120}
+            />
+            <TypewriterEffect
+              as="p"
+              text="Selected case studies: problem, approach, tech, impact."
+              className="text-silver mb-14 max-w-xl flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.05}
+              startDelayMs={240}
+            />
           </ScrollReveal>
           <div className="space-y-10">
             {projectsCaseStudies.map((project, i) => (
@@ -249,23 +302,56 @@ const PortfolioScrollPage: React.FC = () => {
       <Chapter id="research" className="py-24 md:py-32">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Focus</p>
-            <h2 className="section-title text-white mb-8">Research</h2>
+            <TypewriterEffect
+              as="p"
+              text="Focus"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4 font-typewriter"
+              wordDelay={0.14}
+            />
+            <TypewriterEffect
+              as="h2"
+              text="Research"
+              className="section-title text-white mb-8 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.12}
+              startDelayMs={120}
+            />
           </ScrollReveal>
           <ScrollReveal delay={60}>
-            <p className="text-silver/80 text-sm uppercase tracking-wider mb-4">Interests</p>
+            <TypewriterEffect
+              as="p"
+              text="Interests"
+              className="text-silver/80 text-sm uppercase tracking-wider mb-4 font-typewriter"
+              wordDelay={0.12}
+            />
             <ul className="space-y-3 text-silver mb-10">
               {research.interests.map((item, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-glow-blue shrink-0" />
-                  {item}
+                <li key={i} className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-glow-blue shrink-0 mt-2" />
+                  <TypewriterEffect
+                    as="span"
+                    text={item}
+                    className="flex flex-wrap items-baseline gap-x-1 flex-1 min-w-0"
+                    wordDelay={0.045}
+                    startDelayMs={80 + i * 100}
+                  />
                 </li>
               ))}
             </ul>
           </ScrollReveal>
           <ScrollReveal delay={120}>
-            <p className="text-silver/80 text-sm uppercase tracking-wider mb-3">Current work</p>
-            <p className="text-silver leading-relaxed">{research.current}</p>
+            <TypewriterEffect
+              as="p"
+              text="Current work"
+              className="text-silver/80 text-sm uppercase tracking-wider mb-3 font-typewriter"
+              wordDelay={0.1}
+            />
+            <TypewriterEffect
+              as="p"
+              text={research.current}
+              className="text-silver leading-relaxed flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.03}
+              startDelayMs={200}
+            />
           </ScrollReveal>
         </div>
       </Chapter>
@@ -275,7 +361,12 @@ const PortfolioScrollPage: React.FC = () => {
         <ProductSectionBackgroundImage />
         <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Product</p>
+            <TypewriterEffect
+              as="p"
+              text="Product"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4 font-typewriter"
+              wordDelay={0.14}
+            />
             <h2 className="section-title text-white mb-4">
               <a
                 href={productApp.url}
@@ -286,8 +377,20 @@ const PortfolioScrollPage: React.FC = () => {
                 DsYnc
               </a>
             </h2>
-            <p className="text-silver-light font-medium mb-2">{productApp.title}</p>
-            <p className="text-silver italic mb-4">{productApp.tagline}</p>
+            <TypewriterEffect
+              as="p"
+              text={productApp.title}
+              className="text-silver-light font-medium mb-2 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.06}
+              startDelayMs={100}
+            />
+            <TypewriterEffect
+              as="p"
+              text={productApp.tagline}
+              className="text-silver italic mb-4 font-typewriter flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.07}
+              startDelayMs={220}
+            />
             <a
               href={productApp.url}
               target="_blank"
@@ -303,7 +406,13 @@ const PortfolioScrollPage: React.FC = () => {
               <ScrollReveal key={i} delay={i * 50}>
                 <li className="flex items-start gap-3">
                   <span className="text-glow-blue mt-1 shrink-0">▸</span>
-                  <span>{point}</span>
+                  <TypewriterEffect
+                    as="span"
+                    text={point}
+                    className="flex flex-wrap items-baseline gap-x-1 flex-1 min-w-0"
+                    wordDelay={0.04}
+                    startDelayMs={120 + i * 140}
+                  />
                 </li>
               </ScrollReveal>
             ))}
@@ -316,7 +425,12 @@ const PortfolioScrollPage: React.FC = () => {
         <AfterHoursSectionBackgroundImage />
         <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Product</p>
+            <TypewriterEffect
+              as="p"
+              text="Product"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4 font-typewriter"
+              wordDelay={0.14}
+            />
             <h2 className="section-title text-white mb-4">
               <a
                 href={afterHoursApp.url}
@@ -327,7 +441,14 @@ const PortfolioScrollPage: React.FC = () => {
                 {afterHoursApp.title}
               </a>
             </h2>
-            <p className="text-silver leading-relaxed mb-6">{afterHoursApp.description}</p>
+            <TypewriterEffect
+              as="p"
+              text={afterHoursApp.description}
+              className="text-silver leading-relaxed mb-6 font-typewriter flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.028}
+              startDelayMs={280}
+              showCursor
+            />
             <a
               href={afterHoursApp.url}
               target="_blank"
@@ -344,9 +465,26 @@ const PortfolioScrollPage: React.FC = () => {
       <Chapter id="leadership" className="py-24 md:py-32">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Impact</p>
-            <h2 className="section-title text-white mb-8">Leadership</h2>
-            <p className="text-silver leading-relaxed">{leadership.summary}</p>
+            <TypewriterEffect
+              as="p"
+              text="Impact"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4 font-typewriter"
+              wordDelay={0.14}
+            />
+            <TypewriterEffect
+              as="h2"
+              text="Leadership"
+              className="section-title text-white mb-8 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.12}
+              startDelayMs={120}
+            />
+            <TypewriterEffect
+              as="p"
+              text={leadership.summary}
+              className="text-silver leading-relaxed flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.03}
+              startDelayMs={220}
+            />
           </ScrollReveal>
         </div>
       </Chapter>
@@ -356,24 +494,56 @@ const PortfolioScrollPage: React.FC = () => {
         <div className="absolute inset-0 gradient-orb pointer-events-none" aria-hidden />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <div className="pointer-parallax-hero flex flex-col items-center justify-center py-20 overflow-visible mb-12">
-              <span className="self-start text-[10px] tracking-[0.5em] text-gray-500 uppercase mb-2">
-                Beyond Code
-              </span>
-              <h1 className="text-8xl md:text-9xl font-bold text-white tracking-tighter overflow-visible font-display">
-                Odyssey
-              </h1>
+            <div className="pointer-parallax-hero flex flex-col items-center justify-center py-20 overflow-visible mb-12 w-full">
+              <TypewriterEffect
+                as="span"
+                text="Beyond Code"
+                className="self-start text-[10px] tracking-[0.5em] text-gray-500 uppercase mb-2 font-typewriter block w-full text-left"
+                wordDelay={0.12}
+              />
+              <TypewriterEffect
+                as="h1"
+                text="Odyssey"
+                className="text-8xl md:text-9xl font-bold text-white tracking-tighter overflow-visible font-display flex flex-wrap items-baseline justify-center gap-x-2 w-full"
+                innerClassName="inline-flex flex-wrap justify-center gap-x-2 items-baseline"
+                wordDelay={0.2}
+                startDelayMs={200}
+              />
             </div>
-            <p className="text-silver-light text-lg font-medium mb-6">{odyssey.title}</p>
-            <p className="text-silver text-lg mb-6">{odyssey.intro}</p>
+            <TypewriterEffect
+              as="p"
+              text={odyssey.title}
+              className="text-silver-light text-lg font-medium mb-6 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.06}
+              startDelayMs={120}
+            />
+            <TypewriterEffect
+              as="p"
+              text={odyssey.intro}
+              className="text-silver text-lg mb-6 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.05}
+              startDelayMs={200}
+            />
           </ScrollReveal>
           {odyssey.paragraphs.map((p, i) => (
             <ScrollReveal key={i} delay={i * 80}>
-              <p className="text-silver leading-relaxed mb-6">{p}</p>
+              <TypewriterEffect
+                as="p"
+                text={p}
+                className="text-silver leading-relaxed mb-6 flex flex-wrap items-baseline gap-x-1"
+                wordDelay={0.028}
+                startDelayMs={100 + i * 60}
+              />
             </ScrollReveal>
           ))}
           <ScrollReveal delay={160}>
-            <p className="text-silver-light font-medium mt-8">{odyssey.closing}</p>
+            <TypewriterEffect
+              as="p"
+              text={odyssey.closing}
+              className="text-silver-light font-medium mt-8 flex flex-wrap items-baseline gap-x-1"
+              wordDelay={0.045}
+              startDelayMs={160}
+            />
           </ScrollReveal>
           <ScrollReveal delay={200}>
             <div className="mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -398,8 +568,22 @@ const PortfolioScrollPage: React.FC = () => {
       <Chapter id="contact" className="py-24 md:py-32" minHeight={true}>
         <div ref={contactRef} className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-6">Connect</p>
-            <h2 className="section-title text-white mb-6">{contact.headline}</h2>
+            <TypewriterEffect
+              as="p"
+              text="Connect"
+              className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-6 font-typewriter flex flex-wrap items-baseline justify-center gap-x-1"
+              innerClassName="inline-flex flex-wrap justify-center gap-x-1 items-baseline"
+              wordDelay={0.14}
+            />
+            <TypewriterEffect
+              as="h2"
+              text={contact.headline}
+              className="section-title text-white mb-6 flex flex-wrap items-baseline justify-center gap-x-1 text-balance"
+              innerClassName="inline-flex flex-wrap justify-center gap-x-1 gap-y-1 items-baseline"
+              wordDelay={0.055}
+              startDelayMs={160}
+              showCursor
+            />
             <div className="flex flex-wrap justify-center gap-10 text-silver">
               <a
                 href={`mailto:${contact.email}`}
@@ -435,9 +619,14 @@ const PortfolioScrollPage: React.FC = () => {
                 <span>Resume</span>
               </a>
             </div>
-            <p className="mt-12 text-silver/60 text-sm">
-              {identity.name} · {identity.location}
-            </p>
+            <TypewriterEffect
+              as="p"
+              text={`${identity.name} · ${identity.location}`}
+              className="mt-12 text-silver/60 text-sm flex flex-wrap items-baseline justify-center gap-x-1"
+              innerClassName="inline-flex flex-wrap justify-center gap-x-1 items-baseline"
+              wordDelay={0.1}
+              startDelayMs={400}
+            />
           </ScrollReveal>
         </div>
       </Chapter>
@@ -449,23 +638,52 @@ const PortfolioScrollPage: React.FC = () => {
 function CaseStudyCard({ project }: { project: CaseStudy }) {
   return (
     <article className="pointer-parallax-card border border-gloss-mid/40 rounded-xl p-6 md:p-8 bg-gloss/20 hover:border-graphite/40 transition-colors duration-500">
-      <h3 className="text-lg font-display font-semibold text-white mb-4">{project.title}</h3>
+      <TypewriterEffect
+        as="h3"
+        text={project.title}
+        className="text-lg font-display font-semibold text-white mb-4 flex flex-wrap items-baseline gap-x-1"
+        wordDelay={0.08}
+      />
       <div className="space-y-4 text-silver text-sm md:text-base leading-relaxed">
         <div>
           <span className="text-silver/60 uppercase tracking-wider text-xs">Problem</span>
-          <p className="mt-1">{project.problem}</p>
+          <TypewriterEffect
+            as="p"
+            text={project.problem}
+            className="mt-1 flex flex-wrap items-baseline gap-x-1"
+            wordDelay={0.028}
+            startDelayMs={80}
+          />
         </div>
         <div>
           <span className="text-silver/60 uppercase tracking-wider text-xs">Approach</span>
-          <p className="mt-1">{project.approach}</p>
+          <TypewriterEffect
+            as="p"
+            text={project.approach}
+            className="mt-1 flex flex-wrap items-baseline gap-x-1"
+            wordDelay={0.028}
+            startDelayMs={120}
+          />
         </div>
         <div>
           <span className="text-silver/60 uppercase tracking-wider text-xs">Tech</span>
-          <p className="mt-1">{project.tech.join(' · ')}</p>
+          <TypewriterEffect
+            as="p"
+            text={project.tech.join(' · ')}
+            className="mt-1 flex flex-wrap items-baseline gap-x-1"
+            wordDelay={0.06}
+            startDelayMs={100}
+          />
         </div>
         <div>
           <span className="text-silver/60 uppercase tracking-wider text-xs">Impact</span>
-          <p className="mt-1">{project.impact}</p>
+          <TypewriterEffect
+            as="p"
+            text={project.impact}
+            className="mt-1 flex flex-wrap items-baseline gap-x-1"
+            wordDelay={0.035}
+            startDelayMs={100}
+          />
         </div>
         {project.link && (
           <a

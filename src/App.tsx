@@ -4,7 +4,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import PortfolioNav from './components/portfolio/PortfolioNav';
 import PortfolioFooter from './components/portfolio/PortfolioFooter';
 import FloatingStars from './components/portfolio/FloatingStars';
+import TerminalSfxController from './components/portfolio/TerminalSfxController';
 import PortfolioScrollPage from './pages/portfolio/PortfolioScrollPage';
+import MechanicalGenZPage from './pages/portfolio/MechanicalGenZPage';
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
@@ -50,10 +52,12 @@ function App() {
         <ScrollToTop />
         <div className="min-h-screen bg-space relative">
           <FloatingStars />
+          <TerminalSfxController />
           <div className="relative z-10">
             <PortfolioNav />
             <Routes>
               <Route path="/" element={<PortfolioScrollPage />} />
+              <Route path="/mechanical" element={<MechanicalGenZPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/reset-password" element={<ResetPasswordPage />} />
