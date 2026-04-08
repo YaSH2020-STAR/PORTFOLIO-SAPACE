@@ -8,6 +8,7 @@ import {
   projectsCaseStudies,
   research,
   productApp,
+  afterHoursApp,
   leadership,
   odyssey,
   contact,
@@ -102,6 +103,43 @@ function ProductSectionBackgroundImage() {
       style={{
         backgroundImage: 'url(/dsync-section-bg.png)',
         backgroundPosition: 'right center',
+        filter: 'grayscale(100%)',
+        opacity,
+        zIndex: 0,
+      }}
+      aria-hidden
+    />
+  );
+}
+
+/** Dim image behind AfterHours section; fades when scrolling away. */
+function AfterHoursSectionBackgroundImage() {
+  const [opacity, setOpacity] = React.useState(0);
+
+  useEffect(() => {
+    const el = document.getElementById('afterhours-product');
+    if (!el) return;
+
+    const updateOpacity = () => {
+      const rect = el.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const sectionCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(sectionCenter - viewportCenter);
+      const fadeRange = window.innerHeight * 0.6;
+      const visible = Math.max(0, 1 - distance / fadeRange);
+      setOpacity(visible * 0.14);
+    };
+
+    updateOpacity();
+    window.addEventListener('scroll', updateOpacity, { passive: true });
+    return () => window.removeEventListener('scroll', updateOpacity);
+  }, []);
+
+  return (
+    <div
+      className="fixed inset-0 bg-cover bg-center bg-no-repeat pointer-events-none transition-opacity duration-300"
+      style={{
+        backgroundImage: 'url(/afterhours-section-bg.png)',
         filter: 'grayscale(100%)',
         opacity,
         zIndex: 0,
@@ -270,6 +308,35 @@ const PortfolioScrollPage: React.FC = () => {
               </ScrollReveal>
             ))}
           </ul>
+        </div>
+      </Chapter>
+
+      {/* AfterHours */}
+      <Chapter id="afterhours-product" className="py-24 md:py-32 relative">
+        <AfterHoursSectionBackgroundImage />
+        <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6">
+          <ScrollReveal>
+            <p className="text-xs uppercase tracking-[0.25em] text-silver/60 mb-4">Product</p>
+            <h2 className="section-title text-white mb-4">
+              <a
+                href={afterHoursApp.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-neon transition-colors"
+              >
+                {afterHoursApp.title}
+              </a>
+            </h2>
+            <p className="text-silver leading-relaxed mb-6">{afterHoursApp.description}</p>
+            <a
+              href={afterHoursApp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-glow-blue hover:text-neon transition-colors text-sm font-medium"
+            >
+              Visit AfterHours website →
+            </a>
+          </ScrollReveal>
         </div>
       </Chapter>
 
