@@ -97,7 +97,7 @@ export const projects: Project[] = [
       'Features: AI chat coach, meal plans, workout calendar, fasting tracker, community events, progress stats, and rewards.',
       'Authentication and subscription management via Firebase and Stripe.',
     ],
-    link: 'https://github.com',
+    link: 'https://github.com/YaSH2020-STAR',
     linkLabel: 'GitHub',
   },
 ];

@@ -1,12 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import { Mail, Linkedin, Github, ChevronDown, FileDown } from 'lucide-react';
 import { ScrollReveal } from '../../components/portfolio/ScrollReveal';
+import { PointerSpotlightLayer } from '../../components/portfolio/PointerSpotlightLayer';
 import {
   home,
   about,
   projectsCaseStudies,
   research,
   productApp,
+  secondaryProductApp,
   leadership,
   odyssey,
   contact,
@@ -131,37 +133,43 @@ const PortfolioScrollPage: React.FC = () => {
   };
 
   return (
-    <div id="portfolio-scroll-root" className="bg-space">
+    <div id="portfolio-scroll-root" className="relative min-h-screen bg-space">
+      {/* Layer stack: base → star pattern → pointer spotlight (was hidden when spotlight lived under App z-10) → content */}
+      <div className="absolute inset-0 starfield pointer-events-none z-0" aria-hidden />
+      <PointerSpotlightLayer />
+      <div className="relative z-10 min-h-screen">
       {/* Hero */}
-      <Chapter id="home" className="starfield pt-16">
+      <Chapter id="home" className="pt-16">
         <div className="absolute inset-0 gradient-orb-strong pointer-events-none" aria-hidden />
         <div className="absolute inset-0 bg-gradient-to-b from-space/40 via-transparent to-space pointer-events-none" aria-hidden />
         <div className="relative z-10 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-          <ScrollReveal>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-tight mb-6">
-              {home.headline}
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={80}>
-            <p className="text-lg md:text-xl text-silver max-w-2xl mx-auto mb-8">
-              {home.subheading}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={160}>
-            <p className="text-silver/90 text-base md:text-lg max-w-xl mx-auto mb-12">
-              {home.intro}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={240}>
-            <button
-              type="button"
-              onClick={scrollToNext}
-              className="inline-flex flex-col items-center gap-2 text-silver/70 hover:text-silver transition-colors duration-300"
-            >
-              <span className="text-xs uppercase tracking-[0.2em]">Scroll</span>
-              <ChevronDown className="w-5 h-5 animate-float" />
-            </button>
-          </ScrollReveal>
+          <div className="pointer-parallax-hero">
+            <ScrollReveal>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-tight mb-6">
+                {home.headline}
+              </h1>
+            </ScrollReveal>
+            <ScrollReveal delay={80}>
+              <p className="text-lg md:text-xl text-silver max-w-2xl mx-auto mb-8">
+                {home.subheading}
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={160}>
+              <p className="text-silver/90 text-base md:text-lg max-w-xl mx-auto mb-12">
+                {home.intro}
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={240}>
+              <button
+                type="button"
+                onClick={scrollToNext}
+                className="inline-flex flex-col items-center gap-2 text-silver/70 hover:text-silver transition-colors duration-300"
+              >
+                <span className="text-xs uppercase tracking-[0.2em]">Scroll</span>
+                <ChevronDown className="w-5 h-5 animate-float" />
+              </button>
+            </ScrollReveal>
+          </div>
         </div>
       </Chapter>
 
@@ -251,6 +259,17 @@ const PortfolioScrollPage: React.FC = () => {
             >
               Visit Dsync website →
             </a>
+
+            <h3 className="text-white font-display font-semibold mb-2">{secondaryProductApp.title}</h3>
+            <p className="text-silver italic mb-3">{secondaryProductApp.tagline}</p>
+            <a
+              href={secondaryProductApp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-glow-blue hover:text-neon transition-colors text-sm font-medium mb-8"
+            >
+              Visit AfterHours website →
+            </a>
           </ScrollReveal>
           <ul className="space-y-4 text-silver">
             {productApp.points.map((point, i) => (
@@ -277,12 +296,18 @@ const PortfolioScrollPage: React.FC = () => {
       </Chapter>
 
       {/* Odyssey */}
-      <Chapter id="odyssey" className="starfield py-24 md:py-32 relative">
+      <Chapter id="odyssey" className="py-24 md:py-32 relative">
         <div className="absolute inset-0 gradient-orb pointer-events-none" aria-hidden />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-[0.25em] text-silver/50 mb-4">Beyond code</p>
-            <h2 className="section-title text-white mb-6">Odyssey</h2>
+            <div className="pointer-parallax-hero flex flex-col items-center justify-center py-20 overflow-visible mb-12">
+              <span className="self-start text-[10px] tracking-[0.5em] text-gray-500 uppercase mb-2">
+                Beyond Code
+              </span>
+              <h1 className="text-8xl md:text-9xl font-bold text-white tracking-tighter overflow-visible font-display">
+                Odyssey
+              </h1>
+            </div>
             <p className="text-silver-light text-lg font-medium mb-6">{odyssey.title}</p>
             <p className="text-silver text-lg mb-6">{odyssey.intro}</p>
           </ScrollReveal>
@@ -360,13 +385,14 @@ const PortfolioScrollPage: React.FC = () => {
           </ScrollReveal>
         </div>
       </Chapter>
+      </div>
     </div>
   );
 };
 
 function CaseStudyCard({ project }: { project: CaseStudy }) {
   return (
-    <article className="border border-gloss-mid/40 rounded-xl p-6 md:p-8 bg-gloss/20 hover:border-graphite/40 transition-colors duration-500">
+    <article className="pointer-parallax-card border border-gloss-mid/40 rounded-xl p-6 md:p-8 bg-gloss/20 hover:border-graphite/40 transition-colors duration-500">
       <h3 className="text-lg font-display font-semibold text-white mb-4">{project.title}</h3>
       <div className="space-y-4 text-silver text-sm md:text-base leading-relaxed">
         <div>
