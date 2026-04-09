@@ -13,7 +13,6 @@ const navItems: { id: SectionId; label: string; href?: string }[] = [
   { id: 'leadership', label: 'Leadership' },
   { id: 'odyssey', label: 'Odyssey' },
   { id: 'contact', label: 'Contact' },
-  { id: 'contact', label: 'Mechanical', href: '/mechanical' },
 ];
 
 const PortfolioNav: React.FC = () => {
