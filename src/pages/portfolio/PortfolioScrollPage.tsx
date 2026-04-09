@@ -455,7 +455,7 @@ const PortfolioScrollPage: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-block text-glow-blue hover:text-neon transition-colors text-sm font-medium"
             >
-              Visit AfterHours website →
+              Join AfterHours →
             </a>
           </ScrollReveal>
         </div>
