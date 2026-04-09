@@ -16,12 +16,12 @@ const CommunityPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const handleJoinCommunity = () => {
+  const handleJoin = () => {
     if (user) {
       navigate('/dashboard');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      navigate('/signup');
+      navigate('/signin');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -97,23 +97,26 @@ const CommunityPage = () => {
             <EventCard 
               title="30-Day Challenges"
               description="Join monthly fitness challenges with prizes and community support."
+              onJoin={handleJoin}
             />
             <EventCard 
               title="Live Classes"
               description="Stream daily workout sessions with our expert trainers."
+              onJoin={handleJoin}
             />
             <EventCard 
               title="Local Meetups"
               description="Connect with members in your area for group workouts."
+              onJoin={handleJoin}
             />
           </div>
 
           <div className="text-center">
             <button 
               className="btn-primary"
-              onClick={handleJoinCommunity}
+              onClick={handleJoin}
             >
-              {user ? 'Go to Dashboard' : 'Join Community'}
+              Join
             </button>
           </div>
         </div>
@@ -151,11 +154,22 @@ const CommunityPage = () => {
   );
 };
 
-const EventCard = ({ title, description }: { title: string; description: string }) => (
+const EventCard = ({
+  title,
+  description,
+  onJoin,
+}: {
+  title: string;
+  description: string;
+  onJoin: () => void;
+}) => (
   <div className="bg-gray-dark p-8 rounded-lg text-center transform hover:scale-105 transition-all duration-300">
     <Trophy className="w-12 h-12 text-neon mb-4 mx-auto" />
     <h3 className="text-xl font-bold mb-3">{title}</h3>
-    <p className="text-gray-300">{description}</p>
+    <p className="text-gray-300 mb-6">{description}</p>
+    <button className="btn-primary" onClick={onJoin}>
+      Join
+    </button>
   </div>
 );
 

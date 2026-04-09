@@ -84,6 +84,30 @@ const DashboardPage = () => {
   });
 
   const [meals, setMeals] = useState<MealPlan[]>([]);
+  const [timeGreeting, setTimeGreeting] = useState('Hello');
+  const [localContext, setLocalContext] = useState('');
+
+  useEffect(() => {
+    const updateGreeting = () => {
+      const now = new Date();
+      const hour = now.getHours();
+      let greeting = 'Hello';
+      if (hour < 12) greeting = 'Good morning';
+      else if (hour < 18) greeting = 'Good afternoon';
+      else greeting = 'Good evening';
+
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      const zoneLabel = tz?.split('/').pop()?.replace(/_/g, ' ');
+
+      setTimeGreeting(greeting);
+      setLocalContext(zoneLabel ? `${time} · ${zoneLabel}` : time);
+    };
+
+    updateGreeting();
+    const timer = window.setInterval(updateGreeting, 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // Fetch user data and meal plans from Firestore
   useEffect(() => {
@@ -246,8 +270,9 @@ const DashboardPage = () => {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                Welcome back, {userData.name}!
+                {timeGreeting}, {userData.name}!
               </h1>
+              <p className="text-sm text-gray-400 mb-2">Local time: {localContext}</p>
               <p className="text-gray-300">
                 {userData.tier === 'premium' 
                   ? 'Premium Member - Unlimited Access' 
